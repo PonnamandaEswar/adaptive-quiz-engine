@@ -1,7 +1,8 @@
+// src/lib/firebase.ts
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-
+import { getAnalytics } from "firebase/analytics";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDdB_FoFFpvUs12uqiqdPti-fN5muQ41xQ",
@@ -14,7 +15,7 @@ const firebaseConfig = {
 };
 
 // Only initialize ONCE!
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+export const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
